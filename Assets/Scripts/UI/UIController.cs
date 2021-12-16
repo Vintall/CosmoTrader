@@ -7,9 +7,10 @@ public class UIController : MonoBehaviour
     [SerializeField] ShopPanel shop_panel;
     [SerializeField] ModularCenterPanel modular_center_panel;
     [SerializeField] OverviewInterfacePanel overview_panel;
-    UIController instance;
+    static UIController instance;
 
-    #region Properties
+    #region  Properties
+
     public OverviewInterfacePanel OverviewPanel
     {
         get
@@ -31,7 +32,7 @@ public class UIController : MonoBehaviour
             return shop_panel;
         }
     }
-    public UIController Instance
+    public static UIController Instance
     {
         get
         {

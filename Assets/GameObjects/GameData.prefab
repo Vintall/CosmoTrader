@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8719090348096392222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8719090348096392208}
+  - component: {fileID: 8719090348096392223}
+  m_Layer: 0
+  m_Name: GameData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8719090348096392208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8719090348096392222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 416.43173, y: 367.51486, z: -13255.867}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8719090348096392223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8719090348096392222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1a0babe88fca24ba931f2dbb0818f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  command_center_list:
+  - {fileID: 11400000, guid: 853e36166323d364082ccf4975c5a4b5, type: 2}
+  body_list:
+  - {fileID: 11400000, guid: c6fe344725348ac4bb0d59fb5c043f36, type: 2}
+  engine_list:
+  - {fileID: 11400000, guid: 1d9ab0675d847ea4f9860f6531fd442c, type: 2}
+  battery_list:
+  - {fileID: 11400000, guid: f66d05379b8f24d40aaf33f40e51b96b, type: 2}
+  storage_list:
+  - {fileID: 11400000, guid: 4b0eb94296ccfa543b9a4985c00afcef, type: 2}
+  cannon_list:
+  - {fileID: 11400000, guid: 5a20a04e23b76434bb6f20d5238012f9, type: 2}
+  harvester_list:
+  - {fileID: 11400000, guid: b9c3a068540e3bd4884cdfdfae59947f, type: 2}
+  convertor_list:
+  - {fileID: 11400000, guid: 6fd2fd729c89d684a9139380f23a1549, type: 2}
+  generator_list:
+  - {fileID: 11400000, guid: 5a1e9a3d7a63f514ea1b1b6c79eb9489, type: 2}
+  repairer_list:
+  - {fileID: 11400000, guid: 7a37f6082c8036948aec83b282533217, type: 2}
+  module_prefab: {fileID: 3426085035871043841, guid: ebe9d7040828db144a762e9a54acbeda, type: 3}

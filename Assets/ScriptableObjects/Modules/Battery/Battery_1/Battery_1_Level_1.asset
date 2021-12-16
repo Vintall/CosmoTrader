@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebba8e3076cb94946baa34616c129f6f, type: 3}
+  m_Name: Battery_1_Level_1
+  m_EditorClassIdentifier: 
+  durability: 10
+  cost: 150
+  description: "\u0425\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u042D\u043D\u0435\u0440\u0433\u0438\u0438"
+  sprite: {fileID: 21300000, guid: 5e2473e2e7b502f4b92016575ffd9abd, type: 3}
+  type: 4
+  building_blocked_objects: 05000000
+  main_joint_point:
+    pos: {x: 0, y: 0}
+    angle: 0
+  joint_points: []
+  mw_capacity: 1000000

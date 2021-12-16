@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e486c943eadf4e24ea71eb0dcb6e0cdd, type: 3}
+  m_Name: Battery_1_Container
+  m_EditorClassIdentifier: 
+  levels:
+  - {fileID: 11400000, guid: d95ab96a6964cd34f9642adb2b8af4e5, type: 2}
+  - {fileID: 11400000, guid: 8a69df86d73fa094a9bc41d6c9662249, type: 2}
+  - {fileID: 11400000, guid: 16fa4f45b07559240b4ea09f2e0a663e, type: 2}
+  id: Battery_1

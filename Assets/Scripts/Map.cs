@@ -4,9 +4,26 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
+    Vector2Int map_size = new Vector2Int(40, 40);
+    [SerializeField] Savezone savezone;
+    List<Planet> planets;
+    [SerializeField] Player player;
+    Pirats pirats;
 
-
-
+    public Savezone Savezone
+    {
+        get
+        {
+            return savezone;
+        }
+    }
+    public Player Player
+    {
+        get
+        {
+            return player;
+        }
+    }
     private void OnDrawGizmos()
     {
         void DrawOneSquare(int i, int j)
@@ -19,15 +36,7 @@ public class Map : MonoBehaviour
         }
         Gizmos.color = Color.red;
         for (int i = -20; i < 20; i++)
-        {
             for (int j = -20; j < 20; j++)
-            {
                 DrawOneSquare(i, j);
-                //Gizmos.DrawLine(new Vector3(i, j, 0), new Vector3(i, j + 1, 0));
-                //Gizmos.DrawLine(new Vector3(i, j, 0), new Vector3(i + 1, j, 0));
-                //Gizmos.DrawLine(new Vector3(i + 1, j, 0), new Vector3(i + 1, j + 1, 0));
-                //Gizmos.DrawLine(new Vector3(i, j + 1, 0), new Vector3(i + 1, j + 1, 0));
-            }
-        }
     }
 }

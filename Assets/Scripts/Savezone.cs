@@ -4,13 +4,29 @@ using UnityEngine;
 
 public class Savezone : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Vector2 point_on_map;
+    [SerializeField] ModularCenter modular_center;
+
+    public ModularCenter ModularCenter
+    {
+        get
+        {
+            return modular_center;
+        }
+    }
+
+    public Vector2 PointOnMap
+    {
+        get
+        {
+            return point_on_map;
+        }
+    }
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
