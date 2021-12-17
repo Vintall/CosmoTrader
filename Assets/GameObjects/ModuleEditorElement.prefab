@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd37ecf9d18bd7a44b0b8f28476a658c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  main_point_texture: {fileID: 21300000, guid: a1c32b408b01f6846b1bc641f455b280, type: 3}
+  extra_point_texture: {fileID: 21300000, guid: 89983296fb6964b4f801b2d0a3ebf7b7, type: 3}
+  point_prefab: {fileID: 8186694260317402570, guid: 7676bc889bda06b45a0dba73a8f28040, type: 3}
 --- !u!61 &794676608
 BoxCollider2D:
   m_ObjectHideFlags: 0

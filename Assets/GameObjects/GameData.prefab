@@ -65,3 +65,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7a37f6082c8036948aec83b282533217, type: 2}
   module_prefab: {fileID: 3426085035871043841, guid: ebe9d7040828db144a762e9a54acbeda, type: 3}
   ship_prefab: {fileID: 1588647794286156156, guid: afbd18cf151615a47a8fa99bbf3cdc51, type: 3}
+  editor_point_prefab: {fileID: 8186694260317402570, guid: 7676bc889bda06b45a0dba73a8f28040, type: 3}
