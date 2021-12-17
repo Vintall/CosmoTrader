@@ -5,6 +5,8 @@ using UnityEngine;
 public class CommandCenterModule : BaseModule
 {
     List<BodyModule> body;
+
+    
     public ScriptableModuleLevelsContainer<ScriptableCommandCenter> GetData
     {
         get
@@ -15,5 +17,10 @@ public class CommandCenterModule : BaseModule
 
             return buffer;
         }
+    }
+
+    public ScriptableCommandCenter GetDataLevel(int level)
+    {
+        return (ScriptableCommandCenter)data.ExactLevel(level);
     }
 }

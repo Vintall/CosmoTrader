@@ -15,4 +15,8 @@ public class ConvertorModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableConvertor GetDataLevel(int level)
+    {
+        return (ScriptableConvertor)data.ExactLevel(level);
+    }
 }

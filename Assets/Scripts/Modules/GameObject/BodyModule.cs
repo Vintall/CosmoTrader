@@ -17,6 +17,10 @@ public class BodyModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableBody GetDataLevel(int level)
+    {
+        return (ScriptableBody)data.ExactLevel(level);
+    }
     public override void GetStates(ref Ship ship)
     {
         foreach (BaseModule module in modules)

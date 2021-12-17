@@ -15,4 +15,8 @@ public class StorageModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableStorage GetDataLevel(int level)
+    {
+        return (ScriptableStorage)data.ExactLevel(level);
+    }
 }

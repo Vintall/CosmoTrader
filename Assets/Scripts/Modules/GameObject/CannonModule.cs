@@ -15,4 +15,8 @@ public class CannonModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableCannon GetDataLevel(int level)
+    {
+        return (ScriptableCannon)data.ExactLevel(level);
+    }
 }

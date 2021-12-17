@@ -15,4 +15,8 @@ public class EngineModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableEngine GetDataLevel(int level)
+    {
+        return (ScriptableEngine)data.ExactLevel(level);
+    }
 }

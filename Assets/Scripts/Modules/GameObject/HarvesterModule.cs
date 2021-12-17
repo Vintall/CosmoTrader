@@ -15,4 +15,8 @@ public class HarvesterModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableHarvester GetDataLevel(int level)
+    {
+        return (ScriptableHarvester)data.ExactLevel(level);
+    }
 }

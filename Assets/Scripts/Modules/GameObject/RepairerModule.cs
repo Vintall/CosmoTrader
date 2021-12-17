@@ -15,4 +15,8 @@ public class RepairerModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableRepairer GetDataLevel(int level)
+    {
+        return (ScriptableRepairer)data.ExactLevel(level);
+    }
 }

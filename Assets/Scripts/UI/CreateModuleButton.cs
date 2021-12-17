@@ -7,6 +7,14 @@ public class CreateModuleButton : MonoBehaviour
     [SerializeField] string module_id;
     [SerializeField] ModulesCreateButtonsPanel modules_create_buttons_panel;
 
+
+    public string ModuleId
+    {
+        get
+        {
+            return module_id;
+        }
+    }
     public void ButtonEnter()
     {
         modules_create_buttons_panel.OnCreateButtonEnter(module_id);

@@ -15,4 +15,8 @@ public class GeneratorModule : BaseModule
             return buffer;
         }
     }
+    public ScriptableGenerator GetDataLevel(int level)
+    {
+        return (ScriptableGenerator)data.ExactLevel(level);
+    }
 }

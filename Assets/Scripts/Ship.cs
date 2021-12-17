@@ -6,6 +6,17 @@ public class Ship : MonoBehaviour
 {
     CommandCenterModule command_center;
 
+    public CommandCenterModule CommandCenter
+    {
+        get
+        {
+            return command_center;
+        }
+        set
+        {
+            command_center = value;
+        }
+    }
     public void Attack()
     {
 

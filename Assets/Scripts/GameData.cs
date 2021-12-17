@@ -24,6 +24,7 @@ public class GameData : MonoBehaviour
     [SerializeField] List<ScriptableGeneratorContainer> generator_list;
     [SerializeField] List<ScriptableRepairerContainer> repairer_list;
     [SerializeField] GameObject module_prefab;
+    [SerializeField] GameObject ship_prefab;
 
     List<ScriptableModuleLevelsContainer<ScriptableBaseModule>> modules;
 
@@ -32,6 +33,13 @@ public class GameData : MonoBehaviour
         get
         {
             return module_prefab;
+        }
+    }
+    public GameObject ShipPrefab
+    {
+        get
+        {
+            return ship_prefab;
         }
     }
     public List<ScriptableModuleLevelsContainer<ScriptableBaseModule>> AllModules
