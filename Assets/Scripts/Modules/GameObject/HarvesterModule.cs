@@ -19,4 +19,15 @@ public class HarvesterModule : BaseModule
     {
         return (ScriptableHarvester)data.ExactLevel(level);
     }
+    public ScriptableHarvester GetDataLevel()
+    {
+        return (ScriptableHarvester)data.ExactLevel(CurrentLevel);
+    }
+    public override void GetStates(ref Ship ship)
+    {
+        ship.harvesters_consume_per_mine += GetDataLevel().ConsumeMWPerCollecting;
+        ship.harvesters_takes_ore_per_trip += GetDataLevel().CollectOrePerTrip;
+        //ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
+        base.GetStates(ref ship);
+    }
 }

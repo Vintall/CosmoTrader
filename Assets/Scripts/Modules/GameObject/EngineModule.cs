@@ -19,4 +19,15 @@ public class EngineModule : BaseModule
     {
         return (ScriptableEngine)data.ExactLevel(level);
     }
+    public ScriptableEngine GetDataLevel()
+    {
+        return (ScriptableEngine)data.ExactLevel(CurrentLevel);
+    }
+    public override void GetStates(ref Ship ship)
+    {
+        ship.engines_consume_per_100_km += GetDataLevel().MWConsumePerHundredKm;
+        ship.engines_consume_per_battle += GetDataLevel().MWConsumePerBattle;
+        //ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
+        base.GetStates(ref ship);
+    }
 }

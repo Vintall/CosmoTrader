@@ -7,6 +7,7 @@ public class ModularCenterPanel : MonoBehaviour
     [SerializeField] AddModuleInfoPanel add_module_info_panel;
     [SerializeField] UpgradeModuleInfoPanel upgrade_module_info_panel;
     [SerializeField] ModulesCreateButtonsPanel create_buttons_panel;
+    [SerializeField] Transform update_button;
     [SerializeField] Transform remove_button;
 
     public UpgradeModuleInfoPanel UpgradeModuleInfoPanel
@@ -44,7 +45,24 @@ public class ModularCenterPanel : MonoBehaviour
 
     public void RemoveButtonPressed()
     {
-        GameController.Instance.Map.Savezone.ModularCenter.RemoveModule();
+        GameController.Instance.Map.Savezone.ModularCenter.RemoveSelectedModule();
+    }
+    public void UpdateButtonPressed()
+    {
+        GameController.Instance.Map.Savezone.ModularCenter.UpdateModuleLevel();
+    }
+    public void ShowUpdateButton()
+    {
+        update_button.gameObject.SetActive(true);
+    }
+    public void HideUpdateButton()
+    {
+        update_button.gameObject.SetActive(false);
+    }
+    public void CloseModularCenterPanelButton()
+    {
+        this.gameObject.SetActive(false);
+        GameController.Instance.Map.Savezone.ModularCenter.EndEditing();
     }
     public void OpenRemoveButton()
     {

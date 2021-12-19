@@ -19,4 +19,15 @@ public class ConvertorModule : BaseModule
     {
         return (ScriptableConvertor)data.ExactLevel(level);
     }
+    public ScriptableConvertor GetDataLevel()
+    {
+        return (ScriptableConvertor)data.ExactLevel(CurrentLevel);
+    }
+    public override void GetStates(ref Ship ship)
+    {
+        if (GetDataLevel().OreCountToOneMW < ship.convertors_best_ore_count_per_MW)
+            ship.convertors_best_ore_count_per_MW = GetDataLevel().OreCountToOneMW;
+        //ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
+        base.GetStates(ref ship);
+    }
 }

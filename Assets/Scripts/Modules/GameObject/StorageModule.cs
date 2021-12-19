@@ -19,4 +19,14 @@ public class StorageModule : BaseModule
     {
         return (ScriptableStorage)data.ExactLevel(level);
     }
+    public ScriptableStorage GetDataLevel()
+    {
+        return (ScriptableStorage)data.ExactLevel(CurrentLevel);
+    }
+    public override void GetStates(ref Ship ship)
+    {
+        ship.ore_capacity += GetDataLevel().OreCapacity;
+        //ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
+        base.GetStates(ref ship);
+    }
 }

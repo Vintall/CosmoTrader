@@ -23,12 +23,45 @@ public class GameData : MonoBehaviour
     [SerializeField] List<ScriptableConvertorContainer> convertor_list;
     [SerializeField] List<ScriptableGeneratorContainer> generator_list;
     [SerializeField] List<ScriptableRepairerContainer> repairer_list;
+    [SerializeField] List<string> planet_names;
+
     [SerializeField] GameObject module_prefab;
     [SerializeField] GameObject ship_prefab;
     [SerializeField] GameObject editor_point_prefab;
+    [SerializeField] GameObject planet_prefab;
+    [SerializeField] GameObject asteroid_prefab;
+    [SerializeField] GameObject pirates_prefab;
 
     List<ScriptableModuleLevelsContainer<ScriptableBaseModule>> modules;
 
+    public List<string> PlanetNames
+    {
+        get
+        {
+            return planet_names;
+        }
+    }
+    public GameObject PiratesPrefab
+    {
+        get
+        {
+            return pirates_prefab;
+        }
+    }
+    public GameObject AsteroidPrefab
+    {
+        get
+        {
+            return asteroid_prefab;
+        }
+    }
+    public GameObject PlanetPrefab
+    {
+        get
+        {
+            return planet_prefab;
+        }
+    }
     public GameObject EditorPointPrefab
     {
         get

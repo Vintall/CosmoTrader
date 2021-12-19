@@ -10,10 +10,18 @@ public class BuyEnergyPanel : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI money_have;
     [SerializeField] RectTransform bar;
     [SerializeField] RectTransform movable_bar;
-    [SerializeField] List<UnityEngine.UI.Button> offer_button;
+    [SerializeField] StockPanel stock;
+    [SerializeField] Transform sell_ore_button;
     #endregion
 
     #region Properties
+    public Transform SellOreButton
+    {
+        get
+        {
+            return sell_ore_button;
+        }
+    }
     public int PowerMaxCapacity
     {
         set
@@ -37,6 +45,11 @@ public class BuyEnergyPanel : MonoBehaviour
     }
     #endregion
 
+    public void SellOreButtonCallback() //Swap to ore-sell panel
+    {
+        if (is_savezone)
+            transform.parent.GetComponent<ShopPanel>().SetSellOrePanel();
+    }
     public void ChangeStates(int power_have, int max_capacity, float money)
     {
         PowerMaxCapacity = max_capacity;
@@ -47,9 +60,37 @@ public class BuyEnergyPanel : MonoBehaviour
     public void ClosePanel()
     {
         gameObject.SetActive(false);
+        GameController.Instance.Map.Player.GoToOverview();
     }
-    public void OpenPanel()
+    bool is_savezone;
+    public void OpenPanel(bool is_savezone)
     {
+        stock.Panels[0].gameObject.SetActive(is_savezone);
+        stock.Panels[1].gameObject.SetActive(is_savezone);
+        stock.Panels[2].gameObject.SetActive(!is_savezone);
+        stock.Panels[3].gameObject.SetActive(is_savezone);
+        stock.Panels[4].gameObject.SetActive(!is_savezone);
+        stock.Panels[5].gameObject.SetActive(is_savezone);
+
+        int mw_have = GameController.Instance.Map.Player.Ship.MW_capacity - GameController.Instance.Map.Player.Ship.MWHave;
+        for (int i = 0; i < stock.Panels.Count; i++)
+        {
+            stock.Panels[i].gameObject.SetActive(true);
+
+            
+            if (!(mw_have >= stock.Panels[i].QuantityLower && mw_have < stock.Panels[i].QuantityHigher))
+                stock.Panels[i].gameObject.SetActive(false);
+        }
+
+        this.is_savezone = is_savezone;
         gameObject.SetActive(true);
+    }
+    public void BuyButtonCallback(string button_id)
+    {
+        int id = int.Parse(button_id);
+        float cost = stock.Panels[id].Cost;
+        int count = stock.Panels[id].Count;
+
+        GameController.Instance.Map.Player.BuyEnergy(cost, count);
     }
 }

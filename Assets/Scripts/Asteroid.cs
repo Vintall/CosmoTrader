@@ -4,15 +4,48 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Vector2Int pos;
+    public int ore_have;
+    string asteroid_name;
+
+    public string AsteroidName
     {
-        
+        get
+        {
+            return asteroid_name;
+        }
+        set
+        {
+            asteroid_name = value;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public Vector2Int Pos
     {
-        
+        get
+        {
+            return pos;
+        }
+        set
+        {
+            pos = value;
+            UIController.Instance.MapGrid.SetAsteroidMark(pos);
+        }
+    }
+    public int OreHave
+    {
+        get
+        {
+            return ore_have;
+        }
+        set
+        {
+            ore_have = value;
+            if (ore_have <= 0)
+            {
+
+                
+            }
+        }
     }
 }

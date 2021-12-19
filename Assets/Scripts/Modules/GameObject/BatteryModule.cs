@@ -19,9 +19,13 @@ public class BatteryModule : BaseModule
     {
         return (ScriptableBattery)data.ExactLevel(level);
     }
+    public ScriptableBattery GetDataLevel()
+    {
+        return (ScriptableBattery)data.ExactLevel(CurrentLevel);
+    }
     public override void GetStates(ref Ship ship)
     {
-        ScriptableBattery current_level_data = GetData.ExactLevel(current_level);
-        int capacity = current_level_data.MWCapacity;
+        ship.MW_capacity += GetDataLevel().MWCapacity;
+        base.GetStates(ref ship);
     }
 }

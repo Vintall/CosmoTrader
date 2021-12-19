@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Savezone : MonoBehaviour
 {
-    Vector2 point_on_map;
+    Vector2Int pos;
     [SerializeField] ModularCenter modular_center;
 
     public ModularCenter ModularCenter
@@ -15,20 +15,16 @@ public class Savezone : MonoBehaviour
         }
     }
 
-    public Vector2 PointOnMap
+    public Vector2Int PosOnMap
     {
         get
         {
-            return point_on_map;
+            return pos;
         }
-    }
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
+        set
+        {
+            pos = value;
+            UIController.Instance.MapGrid.SetSavezoneMark(pos);
+        }
     }
 }

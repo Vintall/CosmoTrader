@@ -8,6 +8,14 @@ public class BaseModule : MonoBehaviour
     protected int current_level;
     List<Structs.JointPoint> joint_points;
 
+    public void UpdateModule()
+    {
+        if(current_level < data.LevelsCount)
+        {
+            current_level++;
+            Debug.Log("LvlUP " + current_level);
+        }
+    }
     public int CurrentLevel
     {
         get
@@ -28,6 +36,16 @@ public class BaseModule : MonoBehaviour
         this.current_level = level;
     }
     public virtual void GetStates(ref Ship ship)
-    { }
+    {
+        ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
+    }
+    public List<BaseModule> GetAllChilds()
+    {
+        List<BaseModule> baseModules = new List<BaseModule>();
+        for (int i = 0; i < transform.childCount; i++)
+            baseModules.Add(transform.GetChild(i).GetComponent<BaseModule>());
 
+        return baseModules;
+    }
+    
 }

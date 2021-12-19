@@ -10,19 +10,48 @@ public class OverviewInterfacePanel : MonoBehaviour
     [SerializeField] TMPro.TextMeshProUGUI energy_text_field;
     [SerializeField] TMPro.TextMeshProUGUI durability_text_field;
     [SerializeField] RectTransform bar_background;
+    [SerializeField] Transform mine_ore_button;
+    [SerializeField] OverviewTradePanel trade_panel;
 
     [SerializeField] RectTransform ore_movable_bar;
     [SerializeField] RectTransform energy_movable_bar;
     [SerializeField] RectTransform durability_movable_bar;
     #endregion
 
+    public OverviewTradePanel TradePanel
+    {
+        get
+        {
+            return trade_panel;
+        }
+    }
+    public void PlayerEnvironmentClear()
+    {
+        HideMineOreButton();
+        trade_panel.HideModularCenterButton();
+        trade_panel.HideSavezoneIcon();
+        //trade_panel.HideShopButton();
+        
+    }
+    public void ShowMineOreButton()
+    {
+        mine_ore_button.gameObject.SetActive(true);
+    }
+    public void HideMineOreButton()
+    {
+        mine_ore_button.gameObject.SetActive(false);
+    }
+    public void MineOreButtonCallback()
+    {
+        GameController.Instance.Map.Player.MineOre();
+    }
     public void ChangeBalanceInfo(float balance)
     {
         balance_text_field.text = balance.ToString();
     }
     public void ChangeOreInfo(int ore_have, int ore_max)
     {
-        ore_movable_bar.offsetMax= new Vector2(bar_background.rect.width * ((float)ore_have / ore_max) - bar_background.rect.width, 0);
+        ore_movable_bar.offsetMax = new Vector2(bar_background.rect.width * ((float)ore_have / ore_max) - bar_background.rect.width, 0);
         ore_text_field.text = ore_have.ToString() + " / " + ore_max.ToString();
     }
     public void ChangeDurabilityInfo(int durability_have, int durability_max)

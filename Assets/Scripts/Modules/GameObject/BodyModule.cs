@@ -21,9 +21,24 @@ public class BodyModule : BaseModule
     {
         return (ScriptableBody)data.ExactLevel(level);
     }
+    public ScriptableBody GetDataLevel()
+    {
+        return (ScriptableBody)data.ExactLevel(CurrentLevel);
+    }
+    //public override void GetStates(ref Ship ship)
+    // {
+    //foreach (BaseModule module in modules)
+    //    module.GetStates(ref ship);
+    //}
+    public void SetAllChilds()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            modules.Add(transform.GetChild(i).GetComponent<GameModule>().module);
+        }
+    }
     public override void GetStates(ref Ship ship)
     {
-        foreach (BaseModule module in modules)
-            module.GetStates(ref ship);
+        ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
     }
 }

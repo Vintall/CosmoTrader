@@ -19,4 +19,14 @@ public class GeneratorModule : BaseModule
     {
         return (ScriptableGenerator)data.ExactLevel(level);
     }
+    public ScriptableGenerator GetDataLevel()
+    {
+        return (ScriptableGenerator)data.ExactLevel(CurrentLevel);
+    }
+    public override void GetStates(ref Ship ship)
+    {
+        ship.generators_generate_per_100_km += GetDataLevel().GiveMWPerHundredKm;
+        //ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
+        base.GetStates(ref ship);
+    }
 }

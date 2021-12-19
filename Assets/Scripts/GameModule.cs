@@ -9,6 +9,7 @@ public class GameModule : MonoBehaviour
 
     public BaseModule module;
 
+    
     public void RefreshCollider()
     {
         Destroy(polygon_collider);
