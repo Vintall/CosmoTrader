@@ -9,7 +9,16 @@ public class ModularCenterPanel : MonoBehaviour
     [SerializeField] ModulesCreateButtonsPanel create_buttons_panel;
     [SerializeField] Transform update_button;
     [SerializeField] Transform remove_button;
+    [SerializeField] Transform exit_button;
+    [SerializeField] TMPro.TextMeshProUGUI balance;
 
+    public TMPro.TextMeshProUGUI Balance
+    {
+        get
+        {
+            return balance;
+        }
+    }
     public UpgradeModuleInfoPanel UpgradeModuleInfoPanel
     {
         get
@@ -29,6 +38,13 @@ public class ModularCenterPanel : MonoBehaviour
         get
         {
             return create_buttons_panel;
+        }
+    }
+    public Transform ExitButton
+    {
+        get
+        {
+            return exit_button;
         }
     }
 

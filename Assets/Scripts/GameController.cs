@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour
 
         map.GenerateMap();
 
-        map.Player.ship.GetComponent<Ship>().money = 2500;
+        map.Player.ship.GetComponent<Ship>().Money = 2500;
         map.Player.ship.GetComponent<Ship>().MW_have = 500000;
 
         map.Savezone.ModularCenter.StartEditing(map.Player.transform, map.Player.ship);
@@ -110,6 +110,7 @@ public class GameController : MonoBehaviour
             map.Player.Ship.MWHave += 100;
             pirates_destroyed++;
             BattleLoger.Log("Пираты уничтожены! ");
+            UIController.Instance.OverviewPanel.AddLog("Пираты уничтожены! \nВы получаете 1000 руды и 100МВт энергии");
             BattleLoger.CloseFile();
             if (pirates_destroyed==3)
             {
@@ -146,11 +147,11 @@ public class GameController : MonoBehaviour
     public void GameOver(string description, bool is_win)
     {
         is_game_over = true;
-        if (is_win)
-            Debug.Log("Победа");
-        else
-            Debug.Log("Поражение");
+
+        UIController.Instance.GameOverPanel.ChangeStates(is_win, description);
+
         Destroy(map);
+        UIController.Instance.GameOverUI();
         Debug.Log(description);
     }
 }

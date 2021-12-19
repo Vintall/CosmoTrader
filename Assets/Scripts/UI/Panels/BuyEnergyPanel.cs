@@ -93,4 +93,9 @@ public class BuyEnergyPanel : MonoBehaviour
 
         GameController.Instance.Map.Player.BuyEnergy(cost, count);
     }
+    public void ChangeStates(int energy_have, int energy_max)
+    {
+        if (energy_max != 0)
+            movable_bar.localScale = new Vector3((float)energy_have / (float)energy_max, 1, 1);
+    }
 }

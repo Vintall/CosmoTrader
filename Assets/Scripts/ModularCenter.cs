@@ -11,7 +11,16 @@ public class ModularCenter : MonoBehaviour
     bool is_editing;
 
     public List<Transform> all_modules = new List<Transform>();
-    
+    public List<Structs.ModuleType> ship_requirments = new List<Structs.ModuleType>
+    {
+        Structs.ModuleType.CommandCenter,
+        Structs.ModuleType.Battery,
+        Structs.ModuleType.Storage,
+        Structs.ModuleType.Cannon,
+        Structs.ModuleType.Harvester,
+        Structs.ModuleType.Engine,
+        Structs.ModuleType.Body
+    };
     public Transform EditingShip
     {
         get
@@ -22,6 +31,11 @@ public class ModularCenter : MonoBehaviour
     public void BuyModule(string id)
     {
         ScriptableModuleLevelsContainer<ScriptableBaseModule> module_data = GameData.Instance.GetModuleByID(id);
+
+        if (module_data.ExactLevel(1).Cost > editing_ship.GetComponent<Ship>().money)
+            return;
+
+        editing_ship.GetComponent<Ship>().money -= module_data.ExactLevel(1).Cost;
 
         GameObject new_object = Instantiate(GameData.Instance.ModulePrefab);
         GameModule game_module = new_object.GetComponent<GameModule>();
@@ -68,24 +82,65 @@ public class ModularCenter : MonoBehaviour
         module_editor_element.AddExtraPoints();
         all_modules.Add(new_object.transform);
 
-
         game_module.RefreshCollider();
-        
+
+        UIController.Instance.ModularCenterPanel.Balance.text = editing_ship.GetComponent<Ship>().money.ToString();
         //is_editing = true;
 
+        CheckBasicRequirments();
         RefreshModularCenter();
+    }
+    public void CheckBasicRequirments()
+    {
+        bool result = true;
+        int body_count = 0;
+        int engine_count = 0;
+        List<Structs.ModuleType> unused_modules = ship_requirments;
+
+        for (int i = 0; i < all_modules.Count; i++)
+        {
+            if (all_modules[i].GetComponent<GameModule>().module.Data.ExactLevel(1).Type == Structs.ModuleType.Body)
+                body_count++;
+
+            if (all_modules[i].GetComponent<GameModule>().module.Data.ExactLevel(1).Type == Structs.ModuleType.Engine)
+                engine_count++;
+
+            for (int j = 0; j < unused_modules.Count; j++)
+                if (all_modules[i].GetComponent<GameModule>().module.Data.ExactLevel(all_modules[i].GetComponent<GameModule>().module.CurrentLevel).Type == unused_modules[j])
+                {
+                    unused_modules.RemoveAt(j);
+                    break;
+                }
+        }
+
+
+        if (unused_modules.Count == 0 && editing_ship.childCount == 1 && (body_count / (float)engine_count) <= 2) 
+            AllowEndEditing();
+        else
+            BlockEndEditing();
+        
+    }
+    void AllowEndEditing()
+    {
+        UIController.Instance.ModularCenterPanel.ExitButton.gameObject.SetActive(true);
+    }
+    void BlockEndEditing()
+    {
+        UIController.Instance.ModularCenterPanel.ExitButton.gameObject.SetActive(false);
     }
     public void SelectModule(Transform module)
     {
         active_module = module;
         is_module_selected = true;
         UIController.Instance.ModularCenterPanel.OpenRemoveButton();
+        CheckBasicRequirments();
 
     }
     public void DeselectModule()
     {
         is_module_selected = false;
         UIController.Instance.ModularCenterPanel.CloseRemoveButton();
+        CheckBasicRequirments();
     }
 
     public void RemoveSelectedModule()
@@ -96,10 +151,12 @@ public class ModularCenter : MonoBehaviour
         if (active_module.parent != this.transform)
             return;
 
+
         Destroy(active_module.gameObject);
         all_modules.Remove(active_module);
         is_module_selected = false;
         UIController.Instance.ModularCenterPanel.CloseRemoveButton();
+        CheckBasicRequirments();
     }
     public void RefreshModularCenter()
     {
@@ -112,30 +169,44 @@ public class ModularCenter : MonoBehaviour
             UIController.Instance.ModularCenterPanel.CreateButtonsPanel.AllowAllButtons();
 
     }
+    public void FixedUpdate()
+    {
+        if (is_editing)
+        {
+            if (is_module_selected)
+            {
+                UIController.Instance.ModularCenterPanel.UpgradeModuleInfoPanel.ChangeInfo(
+                    active_module.GetComponent<GameModule>().module.Data.ID,
+                    active_module.GetComponent<GameModule>().module.CurrentLevel);
+            }
+            CheckBasicRequirments();
+        }
+
+    }
     public void UpdateModuleLevel()
     {
+
         foreach(ModuleEditorElement.Point point in active_module.GetComponent<ModuleEditorElement>().extra_points)
-        {
             if (point.is_used)
                 return;
-        }
-        active_module.GetComponent<GameModule>().module.UpdateModule();
+        BaseModule module_data = active_module.GetComponent<GameModule>().module;
+
+        if (module_data.CurrentLevel == module_data.Data.LevelsCount)
+            return;
+
+        if (module_data.Data.ExactLevel(module_data.CurrentLevel + 1).Cost > editing_ship.GetComponent<Ship>().money)
+            return;
+
+        editing_ship.GetComponent<Ship>().money -= module_data.Data.ExactLevel(module_data.CurrentLevel + 1).Cost;
+
+        module_data.UpdateModule();
         active_module.GetComponent<ModuleEditorElement>().AddExtraPoints();
         active_module.GetComponent<GameModule>().SpriteRenderer.sprite =
-             active_module.GetComponent<GameModule>().module.Data.ExactLevel(active_module.GetComponent<GameModule>().module.CurrentLevel).Sprite;
+             module_data.Data.ExactLevel(module_data.CurrentLevel).Sprite;
+
+        UIController.Instance.ModularCenterPanel.Balance.text = editing_ship.GetComponent<Ship>().money.ToString();
+        CheckBasicRequirments();
     }
-    private void Start()
-    {
-        //StartEditing();
-    }
-    //public void StartEditing()
-    //{
-    //    player_on_editor = GameController.Instance.Map.Player.transform;
-    //    editing_ship = Instantiate(GameData.Instance.ShipPrefab).transform;
-    //    editing_ship.parent = this.transform;
-    //    RefreshModularCenter();
-    //    is_editing = true;
-    //}
     public void StartEditing(Transform player, Transform player_ship)
     {
         player_ship.parent = this.transform;
@@ -165,23 +236,35 @@ public class ModularCenter : MonoBehaviour
                 modules[i].gameObject.SetActive(true);
             }
         }
+        CheckBasicRequirments();
     }
     public void EndEditing()
     {
+        player_on_editor.GetComponent<Player>().is_have_convertor = false;
+        UIController.Instance.OverviewPanel.TradePanel.HideConvertorButton();
         for (int j = 0; j < all_modules.Count; j++) 
         {
             for (int i = 0; i < all_modules[j].GetComponent<ModuleEditorElement>().extra_points.Count; i++)
                 all_modules[j].GetComponent<ModuleEditorElement>().extra_points[i].DestroyPointObject();
 
+            if (all_modules[j].GetComponent<GameModule>().module.Data.ExactLevel(1).Type == Structs.ModuleType.Convertor)
+            {
+                player_on_editor.GetComponent<Player>().is_have_convertor = true;
+                UIController.Instance.OverviewPanel.TradePanel.ShowConvertorButton();
+            }
+
             all_modules[j].GetComponent<ModuleEditorElement>().main_point.DestroyPointObject();
             all_modules[j].gameObject.SetActive(false);
             Destroy(all_modules[j].GetComponent<ModuleEditorElement>());
         }
+        editing_ship.GetComponent<Ship>().RepairersStart();
+
         player_on_editor.GetComponent<Player>().ship = editing_ship;
         player_on_editor.GetComponent<Player>().ship.parent = player_on_editor.transform;
         player_on_editor.GetComponent<Player>().ship.GetComponent<Ship>().CommandCenter = 
             (CommandCenterModule)player_on_editor.GetComponent<Player>().ship.GetChild(0).GetComponent<GameModule>().module;
         
+
 
         StartCoroutine(Crutch());
     }

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   durability: 10
   cost: 50
-  description: "\u0425\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0440\u0443\u0434\u044B"
+  description: "\u0425\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0440\u0443\u0434\u044B\n\u0412\u043C\u0435\u0441\u0442\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C
+    2000 \u0440\u0443\u0434\u044B"
   sprite: {fileID: 21300000, guid: 6cec1eaeb2b64de429cac628a64a2b8e, type: 3}
   type: 5
   building_blocked_objects: 

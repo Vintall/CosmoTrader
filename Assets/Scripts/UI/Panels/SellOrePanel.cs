@@ -43,4 +43,9 @@ public class SellOrePanel : MonoBehaviour
 
         GameController.Instance.Map.Player.SellOre(cost, count);
     }
+    public void ChangeStates(int ore_have, int ore_max)
+    {
+        if (ore_max != 0)
+            movable_bar.localScale = new Vector3((float)ore_have / (float)ore_max, 1, 1);
+    }
 }

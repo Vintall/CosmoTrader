@@ -26,6 +26,7 @@ public class RepairerModule : BaseModule
     public override void GetStates(ref Ship ship)
     {
         ship.repairers_deals_durability_per_10_min += GetDataLevel().RepairDurabilityPerUse;
+        ship.repairers_consume_mw += 10;
         //ship.max_durability += data.ExactLevel(CurrentLevel).Durability;
         base.GetStates(ref ship);
     }

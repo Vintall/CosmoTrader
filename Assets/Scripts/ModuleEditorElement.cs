@@ -73,7 +73,9 @@ public class ModuleEditorElement : MonoBehaviour
         main_point.point_object = Instantiate(GameData.Instance.EditorPointPrefab).transform;
         main_point.point_object.parent = this.transform;
         main_point.point_object.localPosition = module_data.MainJointPoint.pos;
+
         main_point.point_object.localPosition -= new Vector3(0, 0, 0.1f);
+
         main_point.point_object.GetComponent<EditorPoint>().ChooseMainPoint();
         main_point.type = PointType.Main;
     }
@@ -231,17 +233,6 @@ public class ModuleEditorElement : MonoBehaviour
                             if (is_continue)
                                 continue;
                         }
-                        
-
-
-
-
-
-
-
-
-
-
 
                         joint_point = moduleEditorElements[i].extra_points[j].point_object.position;
 
@@ -265,6 +256,16 @@ public class ModuleEditorElement : MonoBehaviour
                             gameObject.transform.RotateAround(point_b, new Vector3(0, 0, 1), 180 - joint_point_angle);
                             gameObject.transform.position = moduleEditorElements[i].extra_points[j].point_object.position
                                 - this.main_point.point_object.position + this.transform.position;
+
+                            switch(GetComponent<GameModule>().module.Data.ExactLevel(1).Type)
+                            {
+                                case Structs.ModuleType.Body:
+                                    gameObject.transform.position += new Vector3(0, 0, 0.1f);
+                                    break;
+                                default:
+                                    gameObject.transform.position -= new Vector3(0, 0, 0.3f);
+                                    break;
+                            }
 
                             module_id = i;
                             point_id = j;

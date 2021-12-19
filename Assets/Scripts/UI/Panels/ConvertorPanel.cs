@@ -15,7 +15,7 @@ public class ConvertorPanel : MonoBehaviour
     public void OpenPanel(int ore_count)
     {
         gameObject.SetActive(true);
-        exchange_description.text = "Обмен " + ore_count +" руды на 1 МВт";
+        exchange_description.text = "Обмен " + ore_count + " руды на 1 МВт";
     }
     public void ExchangePressed()
     {

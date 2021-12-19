@@ -49,8 +49,11 @@ public class Map : MonoBehaviour
     }
     public void SpawnAsteroid(Vector2Int pos)
     {
-        Destroy(asteroid.gameObject);
+        if (asteroid != null)
+            DestroyAsteroid();
+           
         asteroid = Instantiate(GameData.Instance.AsteroidPrefab).GetComponent<Asteroid>();
+        asteroid.transform.parent = transform;
         asteroid.Pos = pos;
         asteroid.ore_have = Random.Range(100, 1001);
         string symbols = "QWERTYUIOPASDFGHJKLZXCVBNM123456789";
@@ -58,12 +61,13 @@ public class Map : MonoBehaviour
 
         for (int i = 0; i < 8; i++)
             asteroid.name += symbols[Random.Range(0, symbols.Length)];
-
+        
         Debug.Log("Asteroid: " + asteroid.name + " was generated");
     }
     public void DestroyAsteroid()
     {
-
+        Destroy(asteroid.gameObject);
+        UIController.Instance.MapGrid.AsteroidMark.gameObject.SetActive(false);
     }
     public Asteroid Asteroid
     {

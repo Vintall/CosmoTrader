@@ -30,6 +30,7 @@ public class Asteroid : MonoBehaviour
         {
             pos = value;
             UIController.Instance.MapGrid.SetAsteroidMark(pos);
+            UIController.Instance.MapGrid.AsteroidMark.gameObject.SetActive(true);
         }
     }
     public int OreHave
@@ -43,8 +44,7 @@ public class Asteroid : MonoBehaviour
             ore_have = value;
             if (ore_have <= 0)
             {
-
-                
+                transform.parent.GetComponent<Map>().DestroyAsteroid();
             }
         }
     }

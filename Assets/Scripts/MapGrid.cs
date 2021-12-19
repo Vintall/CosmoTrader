@@ -18,7 +18,25 @@ public class MapGrid : MonoBehaviour
 
     Transform[,] cells;
 
-
+    public void OffColliders()
+    {
+        for (int i = 0; i < GameController.Instance.MapSize.x; i++)
+            for (int j = 0; j < GameController.Instance.MapSize.y; j++)
+                cells[i, j].GetComponent<BoxCollider2D>().enabled = false;
+    }
+    public void OnColliders()
+    {
+        for (int i = 0; i < GameController.Instance.MapSize.x; i++)
+            for (int j = 0; j < GameController.Instance.MapSize.y; j++)
+                cells[i, j].GetComponent<BoxCollider2D>().enabled = true;
+    }
+    public Transform AsteroidMark
+    {
+        get
+        {
+            return asteroid_mark;
+        }
+    }
     public void SetPlayerMark(Vector2Int pos)
     {
         player_mark.parent = cells[pos.x, pos.y];

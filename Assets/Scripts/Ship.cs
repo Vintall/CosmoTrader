@@ -43,7 +43,8 @@ public class Ship : MonoBehaviour
     public int generators_generate_per_100_km = 0;
 
     public int repairers_deals_durability_per_10_min = 0;
-    
+    public int repairers_consume_mw = 0;
+
     public int OreHave
     {
         get
@@ -58,6 +59,21 @@ public class Ship : MonoBehaviour
                 ore_have = ore_capacity;
 
             UpdateUIStates();
+        }
+    }
+    public float Money
+    {
+        get
+        {
+            return money;
+
+        }
+        set
+        {
+            money = value;
+
+            if (money > 5000)
+                GameController.Instance.GameOver("Пользователь собрал 5000 криптовалюты", true);
         }
     }
     public int ShotToPirates()
@@ -77,7 +93,7 @@ public class Ship : MonoBehaviour
         {
             durability = value;
             if (durability <= 0)
-                GameController.Instance.GameOver("Закончилась прочность корабля", false);
+                GameController.Instance.GameOver("закончилась прочность корабля", false);
 
             UpdateUIStates();
         }
@@ -91,13 +107,37 @@ public class Ship : MonoBehaviour
         set
         {
             MW_have = value;
-            if (MW_have <= 0)
-                GameController.Instance.GameOver("У Вас закончилась энергия и вы не можете связаться с орбитальной станцией", false);
+            if (MW_have <= 0) 
+            {
+                MW_have = 0;
+                //UIController.Instance.OverviewPanel.AddLog("у вас закончилась энергия\n");
 
+                //GameController.Instance.GameOver(" и вы не можете связаться с орбитальной станцией", false);
+            }
             UpdateUIStates();
         }
     }
+    float time_repairers;
+    bool start_repairers = false;
+    public void RepairersStart()
+    {
+        start_repairers = true;
+        time_repairers = Time.realtimeSinceStartup + 3;
+    }
+    private void FixedUpdate()
+    {
+        if (start_repairers)
+            if (Time.realtimeSinceStartup > time_repairers)
+            {
+                time_repairers = Time.realtimeSinceStartup;
+                RepairersStart();
+                if (repairers_consume_mw > MWHave)
+                    return;
 
+                Durability += repairers_deals_durability_per_10_min;
+                MWHave -= repairers_consume_mw;
+            }
+    }
     public void UpdateUIStates()
     {
         UIController.Instance.OverviewPanel.ChangeStates(
@@ -108,8 +148,10 @@ public class Ship : MonoBehaviour
             max_durability,
             ore_have,
             ore_capacity);
-    }
 
+        UIController.Instance.ShopPanel.SellOrePanel.ChangeStates(ore_have, ore_capacity);
+        UIController.Instance.ShopPanel.BuyEnergyPanel.ChangeStates(ore_have, ore_capacity);
+    }
     public void ExchangeOreToEnergy()
     {
         if (ore_have >= convertors_best_ore_count_per_MW)
@@ -134,8 +176,14 @@ public class Ship : MonoBehaviour
         int pirates_atack_chance = Random.Range(0, 100);
         if (pirates_atack_chance <= 40)
         {
-            GameController.Instance.SpawnPirates();
+            UIController.Instance.OverviewPanel.AddLog("На вас напали пираты");
+            StartCoroutine(PiratesLog());
         }
+    }
+    IEnumerator PiratesLog()
+    {
+        yield return new WaitForSeconds(1);
+        GameController.Instance.SpawnPirates();
     }
     public void MineOre(Asteroid asteroid)
     {
@@ -144,10 +192,14 @@ public class Ship : MonoBehaviour
 
         while (MWHave >= harvesters_consume_per_mine &&
               OreHave < ore_capacity &&
-              asteroid.ore_have != 0)
+              asteroid.ore_have > 0 &&
+              harvesters_left_to_take > 0)
         {
             MWHave -= harvesters_consume_per_mine;
-            OreHave += Mathf.Min(asteroid.ore_have, harvesters_takes_ore_per_trip);
+            int asteroid_ore_have = asteroid.ore_have;
+            OreHave += Mathf.Min(asteroid_ore_have, harvesters_takes_ore_per_trip, harvesters_left_to_take);
+            asteroid.OreHave -= Mathf.Min(asteroid_ore_have, harvesters_takes_ore_per_trip, harvesters_left_to_take);
+            harvesters_left_to_take -= Mathf.Min(asteroid_ore_have, harvesters_takes_ore_per_trip, harvesters_left_to_take);
         }
     }
     public List<BaseModule> GetAllModules()
@@ -192,13 +244,10 @@ public class Ship : MonoBehaviour
         this.generators_generate_per_100_km = buff_ship.generators_generate_per_100_km;
 
         this.repairers_deals_durability_per_10_min = buff_ship.repairers_deals_durability_per_10_min;
+        this.repairers_consume_mw = buff_ship.repairers_consume_mw;
 
         this.max_durability = buff_ship.max_durability;
         this.durability = max_durability;
-
-    }
-    public void Attack()
-    {
 
     }
 }

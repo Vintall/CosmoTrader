@@ -9,10 +9,28 @@ public class UIController : MonoBehaviour
     [SerializeField] OverviewInterfacePanel overview_panel;
     [SerializeField] MapGrid map_grid;
     [SerializeField] ConvertorPanel convertor_panel;
+    [SerializeField] GameOverPanel game_over_panel;
     static UIController instance;
 
     #region  Properties
 
+    public GameOverPanel GameOverPanel
+    {
+        get
+        {
+            return game_over_panel;
+        }
+    }
+
+    public void GameOverUI()
+    {
+        shop_panel.gameObject.SetActive(false);
+        modular_center_panel.gameObject.SetActive(false);
+        overview_panel.gameObject.SetActive(false);
+        map_grid.gameObject.SetActive(false);
+        convertor_panel.gameObject.SetActive(false);
+        game_over_panel.gameObject.SetActive(true);
+    }
     public MapGrid MapGrid
     {
         get
@@ -77,7 +95,7 @@ public class UIController : MonoBehaviour
     }
     public void SetConvertorPanel()
     {
-        convertor_panel.gameObject.SetActive(true);
+        convertor_panel.OpenPanel(GameController.Instance.Map.Player.Ship.convertors_best_ore_count_per_MW);
     }
     private void Awake()
     {
