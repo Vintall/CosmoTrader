@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
     }
     bool is_around_planet = false;
     bool is_around_asteroid = false;
-    bool is_around_savezone = true;
+    public bool is_around_savezone = true;
     public bool is_have_convertor = false;
 
     public void MineOre()

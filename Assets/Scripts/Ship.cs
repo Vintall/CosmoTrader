@@ -164,7 +164,7 @@ public class Ship : MonoBehaviour
     {
         if (MWHave < harvesters_consume_per_mine)
             return;
-
+        bool is_mine = false;
         while (MWHave >= harvesters_consume_per_mine &&
               OreHave < ore_capacity &&
               harvesters_left_to_take > 0)
@@ -172,12 +172,16 @@ public class Ship : MonoBehaviour
             MWHave -= harvesters_consume_per_mine;
             OreHave += harvesters_takes_ore_per_trip;
             harvesters_left_to_take -= Mathf.Min(harvesters_left_to_take, harvesters_takes_ore_per_trip);
+            is_mine = true;
         }
-        int pirates_atack_chance = Random.Range(0, 100);
-        if (pirates_atack_chance <= 40)
+        if (is_mine)
         {
-            UIController.Instance.OverviewPanel.AddLog("На вас напали пираты");
-            StartCoroutine(PiratesLog());
+            int pirates_atack_chance = Random.Range(0, 100);
+            if (pirates_atack_chance <= 40)
+            {
+                UIController.Instance.OverviewPanel.AddLog("На вас напали пираты");
+                StartCoroutine(PiratesLog());
+            }
         }
     }
     IEnumerator PiratesLog()

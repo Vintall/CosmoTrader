@@ -258,6 +258,7 @@ public class ModularCenter : MonoBehaviour
             Destroy(all_modules[j].GetComponent<ModuleEditorElement>());
         }
         editing_ship.GetComponent<Ship>().RepairersStart();
+        player_on_editor.GetComponent<Player>().is_around_savezone = true;
 
         player_on_editor.GetComponent<Player>().ship = editing_ship;
         player_on_editor.GetComponent<Player>().ship.parent = player_on_editor.transform;
@@ -273,6 +274,7 @@ public class ModularCenter : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         player_on_editor.GetComponent<Player>().ship.GetComponent<Ship>().CommandCenter.SetAllChilds();
         player_on_editor.GetComponent<Player>().ship.GetComponent<Ship>().GetModulesStates();
+        player_on_editor.GetComponent<Player>().Ship.harvesters_left_to_take = player_on_editor.GetComponent<Player>().Ship.harvesters_takes_ore_per_trip;
 
         is_editing = false;
         player_on_editor = null;
